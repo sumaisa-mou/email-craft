@@ -1,10 +1,14 @@
 import HeroBlock from "../blocks/HeroBlock";
 import TextBlock from "../blocks/TextBlock";
 import ButtonBlock from "../blocks/ButtonBlock";
+import DividerBlock from "../blocks/DividerBlock";
+import SpacerBlock from "../blocks/SpacerBlock";
 import { useState } from "react";
 import type {Block, BlockType} from "../types";
 import BlockPicker from "./BlockPicker";
 import BlockWrapper from "./BlockWrapper.tsx";
+import HTMLBlock from "../blocks/HTMLBlock.tsx";
+import ImageBlock from "../blocks/ImageBlock";
 
 const initialState: Block[] = [
     {
@@ -51,6 +55,10 @@ function Canvas() {
         setSelectedId(null)
     }
 
+    const updateBlock = (id: string, newData: Record<string, unknown>) => {
+        setBlocks(blocks.map(block => block.id === id ? { ...block, data: { ...block.data, ...newData} } : block))
+    }
+
     return (
         <div className="w-full max-w-[600px] flex flex-col gap-4">
 
@@ -64,7 +72,8 @@ function Canvas() {
                             onSelect={() => setSelectedId(block.id)}
                             onDelete={() => deleteBlock(block.id)}
                         >
-                        `<HeroBlock key={block.id} title={block.data.title as string} subtitle={block.data.substitle as string} />
+                        <HeroBlock title={block.data.title as string} subtitle={block.data.subtitle as string}
+                                    isSelected={selectedId === block.id} onUpdate={(data) => updateBlock(block.id, data)} />
                         </BlockWrapper>
                     )
                 }
@@ -80,6 +89,7 @@ function Canvas() {
                             <TextBlock
                                 key={block.id}
                                 content={block.data.content as string}
+                                isSelected={selectedId === block.id} onUpdate={(data) => updateBlock(block.id, data)}
                             />
                         </BlockWrapper>
                     )
@@ -94,9 +104,74 @@ function Canvas() {
                             onDelete={() => deleteBlock(block.id)}
                         >
                             <ButtonBlock
-                                key={block.id}
                                 text={block.data.text as string}
                                 url={block.data.url as string}
+                                isSelected={selectedId === block.id}
+                                onUpdate={(data) => updateBlock(block.id, data)}
+                            />
+                        </BlockWrapper>
+                    )
+                }
+                if (block.type === 'divider') {
+                    return (
+                        <BlockWrapper
+                            key={block.id}
+                            id={block.id}
+                            isSelected={selectedId === block.id}
+                            onSelect={() => setSelectedId(block.id)}
+                            onDelete={() => deleteBlock(block.id)}
+                        >
+                            <DividerBlock />
+                        </BlockWrapper>
+                    )
+                }
+                if (block.type === 'spacer') {
+                    return (
+                        <BlockWrapper
+                            key={block.id}
+                            id={block.id}
+                            isSelected={selectedId === block.id}
+                            onSelect={() => setSelectedId(block.id)}
+                            onDelete={() => deleteBlock(block.id)}
+                        >
+                            <SpacerBlock
+                                size={block.data.size as 'small' | 'medium' | 'large'}
+                                isSelected={selectedId === block.id}
+                                onUpdate={(data) => updateBlock(block.id, data)}
+                            />
+                        </BlockWrapper>
+                    )
+                }
+                if (block.type === 'html') {
+                    return (
+                        <BlockWrapper
+                            key={block.id}
+                            id={block.id}
+                            isSelected={selectedId === block.id}
+                            onSelect={() => setSelectedId(block.id)}
+                            onDelete={() => deleteBlock(block.id)}
+                        >
+                            <HTMLBlock code={block.data.code as string}
+                                       isSelected={selectedId === block.id}
+                                       onUpdate={(data) => updateBlock(block.id, data)}
+                            />
+                        </BlockWrapper>
+                    )
+                }
+                if (block.type === 'image') {
+                    return (
+                        <BlockWrapper
+                            key={block.id}
+                            id={block.id}
+                            isSelected={selectedId === block.id}
+                            onSelect={() => setSelectedId(block.id)}
+                            onDelete={() => deleteBlock(block.id)}
+                        >
+                            <ImageBlock
+                                src={block.data.src as string}
+                                alt={block.data.alt as string}
+                                isSelected={selectedId === block.id}
+                                onUpdate={(data) => updateBlock(block.id, data)}
                             />
                         </BlockWrapper>
                     )

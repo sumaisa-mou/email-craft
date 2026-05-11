@@ -20,7 +20,7 @@ function BlockWrapper({ id, isSelected, onSelect, onDelete, children }: BlockWra
                         e.stopPropagation()
                         onDelete()
                     }}
-                    className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full text-sm hover:bg-red-600"
+                    className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full text-sm hover:bg-red-600 z-10"
                 >
                     ×
                 </button>
