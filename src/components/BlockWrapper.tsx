@@ -9,7 +9,10 @@ interface BlockWrapperProps {
 function BlockWrapper({ id, isSelected, onSelect, onDelete, children }: BlockWrapperProps) {
     return (
         <div
-            onClick={onSelect}
+            onClick={(e) => {
+                e.stopPropagation()
+                onSelect()
+            }}
             className={`relative cursor-pointer rounded-lg transition-all ${
                 isSelected ? 'ring-2 ring-blue-500' : 'hover:ring-1 hover:ring-gray-300'
             }`}
