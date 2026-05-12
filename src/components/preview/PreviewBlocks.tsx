@@ -28,8 +28,14 @@ function PreviewBlocks({ blocks }: PreviewBlocksProps) {
                         )
 
                     case 'button':
+                        const btnAlign = {
+                            left: 'text-left',
+                            center: 'text-center',
+                            right: 'text-right',
+                        }
+                        const btnPos = (block.data.position as string) || 'center'
                         return (
-                            <div key={block.id} className="py-2">
+                            <div key={block.id} className={`py-2 ${btnAlign[btnPos as keyof typeof btnAlign]}`}>
                                 <a
                                     href={block.data.url as string}
                                     className="inline-block bg-blue-500 text-white px-6 py-3 rounded-lg text-sm font-semibold"

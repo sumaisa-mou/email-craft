@@ -73,7 +73,7 @@ function Canvas({blocks, setBlocks, selectedId, setSelectedId, showPicker, setSh
     }
 
     return (
-        <div className="w-full max-w-[600px] flex flex-col gap-4">
+        <div className="w-full max-w-[600px] flex flex-col gap-1">
 
             {blocks.map((block, index) => {
                 const renderBlockContent = () => {
@@ -83,7 +83,7 @@ function Canvas({blocks, setBlocks, selectedId, setSelectedId, showPicker, setSh
                         case 'text':
                             return <TextBlock content={block.data.content as string} isSelected={selectedId === block.id} onUpdate={(data) => updateBlock(block.id, data)} />
                         case 'button':
-                            return <ButtonBlock text={block.data.text as string} url={block.data.url as string} isSelected={selectedId === block.id} onUpdate={(data) => updateBlock(block.id, data)} />
+                            return <ButtonBlock text={block.data.text as string} url={block.data.url as string} position={block.data.position as 'left' | 'center' | 'right'} isSelected={selectedId === block.id} onUpdate={(data) => updateBlock(block.id, data)} onUpdatePostion={(data) => updateBlock(block.id, data)} />
                         case 'divider':
                             return <DividerBlock />
                         case 'spacer':
@@ -163,7 +163,7 @@ function getDefaultData(type: BlockType): Record<string, unknown>{
         case 'text':
             return { content: 'Start typing...' }
         case 'button':
-            return { text: 'Click me', url: '#' }
+            return { text: 'Click me', url: '#', position: 'center' }
         case 'divider':
             return {}
         case 'spacer':

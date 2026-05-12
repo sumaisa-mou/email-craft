@@ -38,8 +38,14 @@ function ClientPreviewBlocks({ blocks, quirks }: ClientPreviewBlocksProps) {
                         )
 
                     case 'button':
+                        const btnAlign = {
+                            left: 'text-left',
+                            center: 'text-center',
+                            right: 'text-right',
+                        }
+                        const btnPos = (block.data.position as string) || 'center'
                         return (
-                            <div key={block.id} className="relative py-2">
+                            <div key={block.id} className={`relative py-2 ${btnAlign[btnPos as keyof typeof btnAlign]}`}>
                                 <span
                                     className={`inline-block bg-blue-500 text-white px-6 py-3 text-sm font-semibold ${
                                         quirks.noBorderRadius ? '' : 'rounded-lg'
