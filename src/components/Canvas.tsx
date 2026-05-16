@@ -72,6 +72,73 @@ function Canvas({blocks, setBlocks, selectedId, setSelectedId, showPicker, setSh
         setBlocks(blocks.map(block => block.id === id ? { ...block, data: { ...block.data, ...newData} } : block))
     }
 
+    const getBlockToolbar = (block: Block) => {
+        switch (block.type) {
+            case 'button':
+                return (
+                    <div className="flex items-center justify-center bg-gray-100 rounded-full p-1">
+                        {(['solid', 'outline', 'ghost'] as const).map((s) => (
+                            <button
+                                key={s}
+                                onClick={(e) => {
+                                    e.stopPropagation()
+                                    updateBlock(block.id, { type: s })
+                                }}
+                                className={`px-4 py-1 text-xs rounded-full ${(block.data.type || 'solid') === s ? 'bg-gray-900 text-white' : 'text-gray-500'}`}
+                            >{s}</button>
+                        ))}
+                    </div>
+                )
+            case 'spacer':
+                return (
+                    <div className="flex items-center justify-center bg-gray-100 rounded-full p-1">
+                        {(['small', 'medium', 'large'] as const).map((s) => (
+                            <button
+                                key={s}
+                                onClick={(e) => {
+                                    e.stopPropagation()
+                                    updateBlock(block.id, { size: s })
+                                }}
+                                className={`px-4 py-1 text-xs rounded-full ${(block.data.size || 'medium') === s ? 'bg-gray-900 text-white' : 'text-gray-500'}`}
+                            >{s}</button>
+                        ))}
+                    </div>
+                )
+            case 'text':
+                return (
+                    <div className="flex items-center justify-center bg-gray-100 rounded-full p-1">
+                        {(['bold', 'italic', 'underline', 'strike'] as const).map((s) => (
+                            <button
+                                key={s}
+                                onClick={(e) => {
+                                    e.stopPropagation()
+                                    updateBlock(block.id, { style: block.data.style === s ? undefined : s })
+                                }}
+                                className={`px-3 py-1 text-xs rounded-full ${block.data.style === s ? 'bg-gray-900 text-white' : 'text-gray-500'}`}
+                            >{s}</button>
+                        ))}
+                    </div>
+                )
+            case 'hero':
+                return (
+                    <div className="flex items-center justify-center bg-gray-100 rounded-full p-1">
+                        {(['centered', 'left', 'right'] as const).map((s) => (
+                            <button
+                                key={s}
+                                onClick={(e) => {
+                                    e.stopPropagation()
+                                    updateBlock(block.id, { style: block.data.style === s ? undefined : s })
+                                }}
+                                className={`px-3 py-1 text-xs rounded-full ${block.data.style === s ? 'bg-gray-900 text-white' : 'text-gray-500'}`}
+                            >{s}</button>
+                        ))}
+                    </div>
+                )
+            default:
+                return undefined
+        }
+    }
+
     return (
         <div className="w-full max-w-[600px] flex flex-col gap-1">
 
@@ -79,15 +146,15 @@ function Canvas({blocks, setBlocks, selectedId, setSelectedId, showPicker, setSh
                 const renderBlockContent = () => {
                     switch (block.type) {
                         case 'hero':
-                            return <HeroBlock title={block.data.title as string} subtitle={block.data.subtitle as string} isSelected={selectedId === block.id} onUpdate={(data) => updateBlock(block.id, data)} />
+                            return <HeroBlock title={block.data.title as string} style={block.data.style as 'centered' | 'left' | 'right' } subtitle={block.data.subtitle as string} isSelected={selectedId === block.id} onUpdate={(data) => updateBlock(block.id, data)} />
                         case 'text':
-                            return <TextBlock content={block.data.content as string} isSelected={selectedId === block.id} onUpdate={(data) => updateBlock(block.id, data)} />
+                            return <TextBlock content={block.data.content as string} style={block.data.style as 'bold' | 'italic' | 'underline' | 'strike'} isSelected={selectedId === block.id} onUpdate={(data) => updateBlock(block.id, data)} />
                         case 'button':
-                            return <ButtonBlock text={block.data.text as string} url={block.data.url as string} position={block.data.position as 'left' | 'center' | 'right'} isSelected={selectedId === block.id} onUpdate={(data) => updateBlock(block.id, data)} onUpdatePostion={(data) => updateBlock(block.id, data)} />
+                            return <ButtonBlock text={block.data.text as string} url={block.data.url as string} type={block.data.type as 'solid' | 'outline' | 'ghost'} isSelected={selectedId === block.id} onUpdate={(data) => updateBlock(block.id, data)} />
                         case 'divider':
                             return <DividerBlock />
                         case 'spacer':
-                            return <SpacerBlock size={block.data.size as 'small' | 'medium' | 'large'} isSelected={selectedId === block.id} onUpdate={(data) => updateBlock(block.id, data)} />
+                            return <SpacerBlock size={block.data.size as 'small' | 'medium' | 'large'} />
                         case 'html':
                             return <HTMLBlock code={block.data.code as string} isSelected={selectedId === block.id} onUpdate={(data) => updateBlock(block.id, data)} />
                         case 'image':
@@ -124,6 +191,7 @@ function Canvas({blocks, setBlocks, selectedId, setSelectedId, showPicker, setSh
                             isSelected={selectedId === block.id}
                             onSelect={() => setSelectedId(block.id)}
                             onDelete={() => deleteBlock(block.id)}
+                            toolbar={getBlockToolbar(block)}
                         >
                             {renderBlockContent()}
                         </BlockWrapper>
@@ -163,7 +231,7 @@ function getDefaultData(type: BlockType): Record<string, unknown>{
         case 'text':
             return { content: 'Start typing...' }
         case 'button':
-            return { text: 'Click me', url: '#', position: 'center' }
+            return { text: 'Click me', url: '', type: 'solid' }
         case 'divider':
             return {}
         case 'spacer':

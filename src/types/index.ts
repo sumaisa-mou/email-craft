@@ -1,9 +1,9 @@
 export type BlockType = 'hero' | 'text' | 'image' | 'button' | 'html' | 'divider' | 'spacer'
 
-export type HeoStyle = 'centered' | 'left' | 'minimal'
+export type HeroStyle = 'centered' | 'left' | 'right'
 export type ButtonStyle = 'solid' | 'outline' | 'ghost'
-export type DividerStyle = 'solid' | 'dashed' | 'dots'
 export type SpacerStyle = 'small' | 'medium' | 'large'
+export type textStyle = 'bold' | 'italic' | 'underline' | 'strike'
 
 export interface Block {
     id: string,

@@ -10,10 +10,16 @@ function PreviewBlocks({ blocks }: PreviewBlocksProps) {
             {blocks.map((block) => {
                 switch (block.type) {
                     case 'hero':
+                        const heroStyles: Record<string, string> = {
+                            centered: 'text-center',
+                            left: 'text-left',
+                            right: 'text-right',
+                        }
+                        const heroStyle = (block.data.style as string) || 'centered'
                         return (
                             <div
                                 key={block.id}
-                                className="bg-gradient-to-r from-indigo-500 to-blue-500 rounded-xl p-10 text-center text-white"
+                                className={`bg-gradient-to-r from-indigo-500 to-blue-500 rounded-xl p-10 ${heroStyles[heroStyle]} text-white`}
                             >
                                 <h1 className="text-2xl font-bold mb-2">{block.data.title as string}</h1>
                                 <p className="text-white/80">{block.data.subtitle as string}</p>
@@ -21,24 +27,31 @@ function PreviewBlocks({ blocks }: PreviewBlocksProps) {
                         )
 
                     case 'text':
+                        const textStyles: Record<string, string> = {
+                            bold: 'font-bold',
+                            italic: 'italic',
+                            underline: 'underline',
+                            strike: 'line-through',
+                        }
+                        const textStyle = block.data.style as string
                         return (
                             <div key={block.id} className="py-4">
-                                <p className="text-gray-700 leading-relaxed">{block.data.content as string}</p>
+                                <p className={`text-gray-700 leading-relaxed ${textStyle ? textStyles[textStyle] : ''}`}>{block.data.content as string}</p>
                             </div>
                         )
 
                     case 'button':
-                        const btnAlign = {
-                            left: 'text-left',
-                            center: 'text-center',
-                            right: 'text-right',
+                        const btnStyles = {
+                            solid: 'bg-blue-500 text-white',
+                            outline: 'border-2 border-blue-500 text-blue-500',
+                            ghost: 'text-blue-500',
                         }
-                        const btnPos = (block.data.position as string) || 'center'
+                        const btnType = (block.data.type as string) || 'solid'
                         return (
-                            <div key={block.id} className={`py-2 ${btnAlign[btnPos as keyof typeof btnAlign]}`}>
+                            <div key={block.id} className="py-2 text-center">
                                 <a
                                     href={block.data.url as string}
-                                    className="inline-block bg-blue-500 text-white px-6 py-3 rounded-lg text-sm font-semibold"
+                                    className={`inline-block px-6 py-3 rounded-full text-sm font-semibold ${btnStyles[btnType as keyof typeof btnStyles]}`}
                                 >
                                     {block.data.text as string}
                                 </a>
