@@ -24,6 +24,19 @@ Most email builders let you design emails — but they don't show you how they'l
 - **JSON + HTML Export** — Get structured data or ready-to-send HTML
 - **Image Upload Support** — Optional callback for custom image upload handling
 
+### About Client Preview
+
+The multi-client preview is a **simulation**, not actual rendering in email clients. It applies known CSS quirks and limitations based on data from [caniemail.com](https://caniemail.com):
+
+| Client | Simulated Quirks |
+|--------|------------------|
+| Gmail | Full support (baseline) |
+| Apple Mail | Full support |
+| Outlook | No gradients, no border-radius, no flexbox |
+| Yahoo | No gradients |
+
+**This is an approximation** to help catch common compatibility issues during design. For production emails, we recommend testing with actual email testing services like Litmus or Email on Acid.
+
 ---
 
 ## Installation
