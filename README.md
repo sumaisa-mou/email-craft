@@ -1,73 +1,146 @@
-# React + TypeScript + Vite
+# Email Craft Editor
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based drag-and-drop email builder with real-time multi-client preview and compatibility scoring.
 
-Currently, two official plugins are available:
+[![npm version](https://img.shields.io/npm/v/email-craft-editor.svg)](https://www.npmjs.com/package/email-craft-editor)
+[![license](https://img.shields.io/npm/l/email-craft-editor.svg)](https://github.com/sumaisa-mou/email-craft/blob/main/LICENSE)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+[Live Demo](https://email-craft-flame.vercel.app/) | [GitHub](https://github.com/sumaisa-mou/email-craft)
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Why Email Craft?
 
-## Expanding the ESLint configuration
+Most email builders let you design emails — but they don't show you how they'll actually render across different clients until you send a test.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Email Craft solves this.** It simulates client-specific rendering quirks (Outlook strips gradients, ignores border-radius, etc.) and shows you a side-by-side preview of Gmail, Outlook, Apple Mail, and Yahoo — in real time.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Key Features
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Multi-client Preview** — See how your email renders in Gmail, Outlook, Apple Mail, and Yahoo simultaneously
+- **Client Quirks Simulation** — Applies real rendering differences based on [caniemail.com](https://caniemail.com) data
+- **Health Scoring** — Real-time compatibility score with per-client breakdown
+- **Block-based Editor** — Hero, Text, Button, Image, Divider, Spacer, and raw HTML blocks
+- **JSON + HTML Export** — Get structured data or ready-to-send HTML
+- **Image Upload Support** — Optional callback for custom image upload handling
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## Installation
+
+```bash
+npm install email-craft-editor
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Quick Start
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```tsx
+import { EmailEditor, blocksToHtml } from 'email-craft-editor'
+import type { Block } from 'email-craft-editor'
+import { useState } from 'react'
+
+function App() {
+  const [blocks, setBlocks] = useState<Block[]>([])
+
+  const handleExport = () => {
+    // Get JSON
+    const json = JSON.stringify(blocks, null, 2)
+    console.log('JSON:', json)
+
+    // Get HTML
+    const html = blocksToHtml(blocks)
+    console.log('HTML:', html)
+  }
+
+  return (
+    <div>
+      <EmailEditor onBlocksChange={setBlocks} />
+      <button onClick={handleExport}>Export</button>
+    </div>
+  )
+}
 ```
+
+---
+
+## API Reference
+
+### `<EmailEditor />`
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `onBlocksChange` | `(blocks: Block[]) => void` | Called whenever blocks change |
+| `initialBlocks` | `Block[]` | Initial blocks to render |
+| `onImageUpload` | `(file: File) => Promise<string>` | Optional. Handle image uploads, return URL |
+
+### `blocksToHtml(blocks)`
+
+Converts blocks array to a complete HTML email document with inline styles.
+
+```tsx
+import { blocksToHtml } from 'email-craft-editor'
+
+const html = blocksToHtml(blocks)
+// Returns: <!DOCTYPE html><html>...
+```
+
+### Block Types
+
+```typescript
+type BlockType = 'hero' | 'text' | 'image' | 'button' | 'html' | 'divider' | 'spacer'
+
+interface Block {
+  id: string
+  type: BlockType
+  data: Record<string, unknown>
+}
+```
+
+---
+
+## Image Upload
+
+By default, images use URL input only. To enable file upload, provide the `onImageUpload` callback:
+
+```tsx
+<EmailEditor 
+  onImageUpload={async (file) => {
+    const formData = new FormData()
+    formData.append('image', file)
+    const res = await fetch('/api/upload', { method: 'POST', body: formData })
+    const { url } = await res.json()
+    return url
+  }}
+/>
+```
+
+When `onImageUpload` is provided, an "Upload" button appears alongside the URL input.
+
+---
+
+## Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| React 19 | UI Framework |
+| TypeScript | Type Safety |
+| Tailwind CSS 4 | Styling |
+| Vite | Build Tool |
+
+---
+
+## Browser Support
+
+The editor works in all modern browsers. The generated HTML email uses inline styles for maximum email client compatibility.
+
+---
+
+## License
+
+MIT
+
+---
+
+Built by [@sumaisa-mou](https://github.com/sumaisa-mou)
