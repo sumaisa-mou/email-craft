@@ -178,10 +178,6 @@ function Canvas({blocks, setBlocks, selectedId, setSelectedId, showPicker, setSh
                                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-l border-t border-gray-200 rotate-45 z-10" />
                                     <BlockPicker
                                         onSelect={(type) => addBlock(type, insertIndex)}
-                                        onClose={() => {
-                                            setShowPicker(false)
-                                            setInsertIndex(null)
-                                        }}
                                     />
                                 </div>
                             </div>
@@ -214,7 +210,6 @@ function Canvas({blocks, setBlocks, selectedId, setSelectedId, showPicker, setSh
                     <div className="mt-4">
                         <BlockPicker
                             onSelect={(type) => addBlock(type)}
-                            onClose={() => setShowPicker(false)}
                         />
                     </div>
                 )}

@@ -14,7 +14,7 @@ interface PreviewModalProps {
     healthResult: HealthResult
 }
 
-function PreviewModal({ isOpen, onClose, blocks, healthResult }: PreviewModalProps) {
+function PreviewModal({ isOpen, onClose, blocks, healthResult: _healthResult }: PreviewModalProps) {
     const [viewMode, setViewMode] = useState<ViewMode>('desktop')
 
     // Close on Esc key

@@ -18,7 +18,7 @@ const statusIcon: Record<ClientStatus, { icon: string; color: string }> = {
     fail: { icon: '✕', color: 'text-red-500' }
 }
 
-function HealthPanel({ result, onClose }: HealthPanelProps) {
+function HealthPanel({ result, onClose: _onClose }: HealthPanelProps) {
     const { score, status, clients, issues } = result
 
     const statusColors = {
