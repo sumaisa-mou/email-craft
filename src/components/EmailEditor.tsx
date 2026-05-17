@@ -9,6 +9,7 @@ import PreviewModal from "./preview/PreviewModal";
 interface EmailEditorProps {
     onBlocksChange?: (blocks: Block[]) => void
     initialBlocks?: Block[]
+    onImageUpload?: (file: File) => Promise<string>
 }
 
 const initialState: Block[] = [
@@ -37,7 +38,7 @@ const initialState: Block[] = [
 
     }
 ]
-function EmailEditor({ onBlocksChange, initialBlocks }: EmailEditorProps) {
+function EmailEditor({ onBlocksChange, initialBlocks, onImageUpload }: EmailEditorProps) {
     const [blocks, setBlocks] = useState<Block[]>(initialBlocks ?? initialState)
     const [showHealthPanel, setShowHealthPanel] = useState(false)
     const [selectedId, setSelectedId] = useState<string | null>(null)
@@ -100,6 +101,7 @@ function EmailEditor({ onBlocksChange, initialBlocks }: EmailEditorProps) {
                     setShowPicker={setShowPicker}
                     insertIndex={insertIndex}
                     setInsertIndex={setInsertIndex}
+                    onImageUpload={onImageUpload}
                 />
             </main>
 

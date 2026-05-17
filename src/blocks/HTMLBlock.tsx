@@ -15,7 +15,7 @@ function HTMLBlock({ code, isSelected, onUpdate }: HTMLBlockProps) {
                 <span className="text-gray-500 text-sm font-mono">{'<>'} HTML</span>
             </div>
 
-            {isEditing ? (
+            {isEditing || (!code && isSelected) ? (
                 <div className="relative">
                     <button
                         onClick={() => setIsEditing(false)}
@@ -25,10 +25,14 @@ function HTMLBlock({ code, isSelected, onUpdate }: HTMLBlockProps) {
                     </button>
                     <textarea
                         value={code}
-                        onChange={(e) => onUpdate?.({ code: e.target.value })}
+                        onChange={(e) => {
+                            if (!isEditing) setIsEditing(true)
+                            onUpdate?.({ code: e.target.value })
+                        }}
                         placeholder="<div>Your HTML here...</div>"
                         className="w-full bg-gray-100 text-gray-800 font-mono text-sm p-4 rounded-lg outline-none resize-y min-h-[150px]"
                         rows={6}
+                        autoFocus
                     />
                 </div>
             ) : (

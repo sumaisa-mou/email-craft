@@ -20,9 +20,10 @@ interface CanvasProps{
     setShowPicker: React.Dispatch<React.SetStateAction<boolean>>
     insertIndex: number | null
     setInsertIndex: React.Dispatch<React.SetStateAction<number | null>>
+    onImageUpload?: (file: File) => Promise<string>
 }
 
-function Canvas({blocks, setBlocks, selectedId, setSelectedId, showPicker, setShowPicker, insertIndex, setInsertIndex}: CanvasProps) {
+function Canvas({blocks, setBlocks, selectedId, setSelectedId, showPicker, setShowPicker, insertIndex, setInsertIndex, onImageUpload}: CanvasProps) {
 
     const addBlock= (type: BlockType, index?: number) => {
         const newBlock: Block = {
@@ -158,7 +159,7 @@ function Canvas({blocks, setBlocks, selectedId, setSelectedId, showPicker, setSh
                         case 'html':
                             return <HTMLBlock code={block.data.code as string} isSelected={selectedId === block.id} onUpdate={(data) => updateBlock(block.id, data)} />
                         case 'image':
-                            return <ImageBlock src={block.data.src as string} alt={block.data.alt as string} isSelected={selectedId === block.id} onUpdate={(data) => updateBlock(block.id, data)} />
+                            return <ImageBlock src={block.data.src as string} alt={block.data.alt as string} isSelected={selectedId === block.id} onUpdate={(data) => updateBlock(block.id, data)} onImageUpload={onImageUpload} />
                         default:
                             return null
                     }
