@@ -7,7 +7,7 @@ interface BlockWrapperProps {
     toolbar?: React.ReactNode
 }
 
-function BlockWrapper({ id, isSelected, onSelect, onDelete, children, toolbar }: BlockWrapperProps) {
+function BlockWrapper({ isSelected, onSelect, onDelete, children, toolbar }: BlockWrapperProps) {
     return (
         <div className="relative">
             <div

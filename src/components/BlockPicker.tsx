@@ -11,10 +11,9 @@ import {
 
 interface BlockPickerProps {
     onSelect: (type: BlockType) => void
-    onClose: () => void
 }
 
-function BlockPicker({onSelect, onClose}: BlockPickerProps) {
+function BlockPicker({onSelect}: BlockPickerProps) {
     const blockOptions: {type: BlockType, label: string, icon: React.ReactNode}[] = [
         { type: 'hero', label: 'Hero', icon: <Monitor size={20} /> },
         { type: 'text', label: 'Text', icon: <AlignLeft size={20} /> },
