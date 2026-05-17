@@ -1,10 +1,15 @@
 import Canvas from "./Canvas.tsx";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import type {Block} from "../types";
 import HealthPanel from "./HealthPanel.tsx";
 import HealthBadge from "./HealthBadge.tsx";
 import {checkHealth} from "../utils/healthCheck.ts";
 import PreviewModal from "./preview/PreviewModal";
+
+interface EmailEditorProps {
+    onBlocksChange?: (blocks: Block[]) => void
+    initialBlocks?: Block[]
+}
 
 const initialState: Block[] = [
     {
@@ -32,14 +37,18 @@ const initialState: Block[] = [
 
     }
 ]
-function EmailEditor() {
-    const [blocks, setBlocks] = useState<Block[]>(initialState)
+function EmailEditor({ onBlocksChange, initialBlocks }: EmailEditorProps) {
+    const [blocks, setBlocks] = useState<Block[]>(initialBlocks ?? initialState)
     const [showHealthPanel, setShowHealthPanel] = useState(false)
     const [selectedId, setSelectedId] = useState<string | null>(null)
     const [showPicker, setShowPicker] = useState(false)
     const [insertIndex, setInsertIndex] = useState<number | null>(null)
     const [showPreview, setShowPreview] = useState(false)
     const healthResult = checkHealth(blocks)
+
+    useEffect(() => {
+        onBlocksChange?.(blocks)
+    }, [blocks, onBlocksChange])
 
     const handleClickOutside = () => {
         setSelectedId(null)

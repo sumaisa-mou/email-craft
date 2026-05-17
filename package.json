@@ -1,19 +1,34 @@
 {
-  "name": "email-craft",
-  "private": true,
+  "name": "email-craft-editor",
   "version": "0.0.0",
   "type": "module",
+  "main": "./dist/email-craft-editor.cjs",
+  "module": "./dist/email-craft-editor.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/email-craft-editor.js",
+      "require": "./dist/email-craft-editor.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:lib": "vite build --config vite.lib.config.ts && tsc --emitDeclarationOnly --declaration --outDir dist",
     "lint": "eslint .",
     "preview": "vite preview"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.0",
     "lucide-react": "^1.14.0",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
     "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
