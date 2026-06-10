@@ -10,7 +10,8 @@
       "import": "./dist/email-craft-editor.js",
       "require": "./dist/email-craft-editor.cjs",
       "types": "./dist/index.d.ts"
-    }
+    },
+    "./style.css": "./dist/email-craft-editor.css"
   },
   "files": [
     "dist"

@@ -22,7 +22,7 @@ function blockToHtml(block: Block): string {
         case 'hero': {
             const alignMap: Record<string, string> = { centered: 'center', left: 'left', right: 'right' }
             const style = (block.data.style as string) || 'centered'
-            return `<div style="background: linear-gradient(to right, #6366f1, #3b82f6); border-radius: 12px; padding: 40px; text-align: ${alignMap[style]}; color: #ffffff;">
+            return `<div style="background-color: #6366f1; background: linear-gradient(to right, #6366f1, #3b82f6); border-radius: 12px; padding: 40px; text-align: ${alignMap[style]}; color: #ffffff;">
     <h1 style="font-size: 24px; font-weight: bold; margin: 0 0 8px 0;">${block.data.title}</h1>
     <p style="margin: 0; opacity: 0.8;">${block.data.subtitle}</p>
 </div>`

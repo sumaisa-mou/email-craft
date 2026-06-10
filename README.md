@@ -45,12 +45,19 @@ The multi-client preview is a **simulation**, not actual rendering in email clie
 npm install email-craft-editor
 ```
 
+Then import the CSS in your app:
+
+```tsx
+import 'email-craft-editor/style.css'
+```
+
 ---
 
 ## Quick Start
 
 ```tsx
 import { EmailEditor, blocksToHtml } from 'email-craft-editor'
+import 'email-craft-editor/style.css'
 import type { Block } from 'email-craft-editor'
 import { useState } from 'react'
 
