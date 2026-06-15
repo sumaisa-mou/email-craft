@@ -2,8 +2,8 @@
 
 A React-based drag-and-drop email builder with real-time multi-client preview and compatibility scoring.
 
-[![npm version](https://img.shields.io/npm/v/@sumaisa/email-craft-editor.svg)](https://www.npmjs.com/package/@sumaisa/email-craft-editor)
-[![license](https://img.shields.io/npm/l/@sumaisa/email-craft-editor.svg)](https://github.com/sumaisa-mou/email-craft/blob/main/LICENSE)
+[![npm version](https://img.shields.io/npm/v/@sumaisa-mou/email-craft-editor.svg)](https://www.npmjs.com/package/@sumaisa-mou/email-craft-editor)
+[![license](https://img.shields.io/npm/l/@sumaisa-mou/email-craft-editor.svg)](https://github.com/sumaisa-mou/email-craft/blob/main/LICENSE)
 
 [Live Demo](https://email-craft-flame.vercel.app/) | [GitHub](https://github.com/sumaisa-mou/email-craft)
 
@@ -42,13 +42,13 @@ The multi-client preview is a **simulation**, not actual rendering in email clie
 ## Installation
 
 ```bash
-npm install @sumaisa/email-craft-editor
+npm install @sumaisa-mou/email-craft-editor
 ```
 
 Then import the CSS in your app:
 
 ```tsx
-import '@sumaisa/email-craft-editor/style.css'
+import '@sumaisa-mou/email-craft-editor/style.css'
 ```
 
 ---
@@ -56,9 +56,9 @@ import '@sumaisa/email-craft-editor/style.css'
 ## Quick Start
 
 ```tsx
-import { EmailEditor, blocksToHtml } from '@sumaisa/email-craft-editor'
-import '@sumaisa/email-craft-editor/style.css'
-import type { Block } from '@sumaisa/email-craft-editor'
+import { EmailEditor, blocksToHtml } from '@sumaisa-mou/email-craft-editor'
+import '@sumaisa-mou/email-craft-editor/style.css'
+import type { Block } from '@sumaisa-mou/email-craft-editor'
 import { useState } from 'react'
 
 function App() {
@@ -100,7 +100,7 @@ function App() {
 Converts blocks array to a complete HTML email document with inline styles.
 
 ```tsx
-import { blocksToHtml } from '@sumaisa/email-craft-editor'
+import { blocksToHtml } from '@sumaisa-mou/email-craft-editor'
 
 const html = blocksToHtml(blocks)
 // Returns: <!DOCTYPE html><html>...
