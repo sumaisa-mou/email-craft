@@ -26,7 +26,7 @@ export const clientQuirks: Record<ClientName, ClientQuirk> = {
     outlook: {
         client: 'outlook',
         noGradient: true,
-        noBorderRadius: true,
+        noBorderRadius: false,
         noFlexbox: true,
         noCustomFonts: true,
     },
