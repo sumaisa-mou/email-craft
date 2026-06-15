@@ -1,5 +1,5 @@
 {
-  "name": "email-craft-editor",
+  "name": "@sumaisa/email-craft-editor",
   "version": "0.0.0",
   "type": "module",
   "main": "./dist/email-craft-editor.cjs",
