@@ -1,6 +1,21 @@
 {
   "name": "@sumaisa-mou/email-craft-editor",
   "version": "0.0.0",
+  "description": "A React-based drag-and-drop email builder with real-time multi-client preview and compatibility scoring",
+  "keywords": [
+    "email",
+    "email-builder",
+    "email-editor",
+    "react",
+    "drag-and-drop",
+    "email-template",
+    "newsletter",
+    "email-marketing",
+    "wysiwyg",
+    "html-email",
+    "outlook",
+    "gmail"
+  ],
   "type": "module",
   "main": "./dist/email-craft-editor.cjs",
   "module": "./dist/email-craft-editor.js",
